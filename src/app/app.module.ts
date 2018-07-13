@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 
 import { appRoutes } from './app.routes';
+import { JokeService } from './services/joke.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,9 @@ import { appRoutes } from './app.routes';
     BrowserModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    JokeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

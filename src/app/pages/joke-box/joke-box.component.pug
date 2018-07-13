@@ -1,0 +1,10 @@
+.joke-box
+  .joke.show('*ngIf'='jokeState !== "no-joke"')
+    .joke-title {{currentJoke.joke}}
+    br
+    button.btn.btn-warning('(click)'='nextState()' '*ngIf'='jokeState !== "show-answer"') {{currentJoke.buttonText}}
+    br
+    .joke-answer('*ngIf'='jokeState === "show-answer"') {{currentJoke.answer}}
+    br
+    br
+  button.btn.btn-success('(click)'='nextState()' '*ngIf'='jokeState === "no-joke" || jokeState === "show-answer"') {{buttonText}}
