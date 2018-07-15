@@ -16,7 +16,6 @@ import { JokeService } from './services/joke.service';
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    JokeService
   ],
   bootstrap: [AppComponent]
 })

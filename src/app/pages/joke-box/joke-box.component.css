@@ -17,3 +17,8 @@ button {
 .joke-box {
   padding: 30px;
 }
+
+.error .joke-error {
+  color: red;
+  font-size: 2.5rem;
+}

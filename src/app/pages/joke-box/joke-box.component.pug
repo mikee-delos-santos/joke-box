@@ -1,4 +1,6 @@
-.joke-box
+//- .error('*ngIf'='!currentJoke && queryDone')
+//-   .joke-error wala na finish na. come back later for more jokes!
+.joke-box('*ngIf'='currentJoke && queryDone')
   .joke.show('*ngIf'='jokeState !== "no-joke"')
     .joke-title {{currentJoke.joke}}
     br

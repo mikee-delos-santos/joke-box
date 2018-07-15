@@ -1,16 +1,38 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from '../../../node_modules/rxjs';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
+import { take } from 'rxjs/operators';
+
 
 
 @Injectable()
 export class JokeService {
 
-  readonly localJokes: object[] = [ {
-    joke: 'Sino sa sp ang laging may baril?',
-    buttonText: 'sino?',
-    answer: 'Edi si bry! Chung! Chung! Chung!'
-  }];
+  private lastJokeIdx;
+  currentJoke: BehaviorSubject<object> = new BehaviorSubject<object>(null);
 
-  readonly jokes: BehaviorSubject<object[]> = new BehaviorSubject<object[]>(this.localJokes);
-  
+  constructor(
+    private afs: AngularFirestore,
+    private localStorage: LocalStorageService
+  ) {
+
+    this.lastJokeIdx = this.localStorage.getLastJokeId();
+    this.queryAndDiscard(this.lastJokeIdx);
+  }
+
+  queryAndDiscard(idx) {
+    this.afs.collection('jokes', ref => ref.orderBy('id', 'asc').startAt(idx).endAt(idx+1).limit(1)).valueChanges().pipe(take(1)).subscribe(
+      v => {
+        this.currentJoke.next(v[0]);
+      }
+    );
+
+  }
+
+  nextJoke() {
+    this.lastJokeIdx = this.lastJokeIdx + 1;
+    this.queryAndDiscard(this.lastJokeIdx);
+    this.localStorage.saveLastJokeId(`${this.lastJokeIdx}`);
+  }
 }

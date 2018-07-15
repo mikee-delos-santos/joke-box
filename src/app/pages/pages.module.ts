@@ -4,7 +4,12 @@ import { pagesRoutes } from './pages.routes';
 import { HomeComponent } from './home/home.component';
 import { JokeBoxComponent } from './joke-box/joke-box.component';
 import { CommonModule } from '../../../node_modules/@angular/common';
-
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '../../environments/environment.prod';
+import { JokeService } from '../services/joke.service';
+import { LocalStorageService } from '../services/local-storage.service';
+ 
 
 @NgModule({
   declarations: [
@@ -13,11 +18,14 @@ import { CommonModule } from '../../../node_modules/@angular/common';
   ],
   imports: [
     RouterModule.forChild(pagesRoutes),
-    CommonModule
+    CommonModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
-  providers: [],
+  providers: [
+    JokeService,
+    LocalStorageService
+  ],
 })
 export class PagesModule {
-
-  // public static routes = pagesRoutes;
- }
+}
