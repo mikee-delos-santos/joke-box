@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { appRoutes } from './app.routes';
 import { JokeService } from './services/joke.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { JokeService } from './services/joke.service';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
   ],
