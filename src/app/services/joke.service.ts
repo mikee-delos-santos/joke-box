@@ -24,7 +24,9 @@ export class JokeService {
   queryAndDiscard(idx) {
     this.afs.collection('jokes', ref => ref.orderBy('id', 'asc').startAt(idx).endAt(idx+1).limit(1)).valueChanges().pipe(take(1)).subscribe(
       v => {
-        this.currentJoke.next(v[0]);
+        if(v[0]) {
+          this.currentJoke.next(v[0]);
+        }
       }
     );
 

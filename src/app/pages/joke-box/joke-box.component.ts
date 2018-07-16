@@ -8,12 +8,12 @@ import { JokeService } from '../../services/joke.service';
 })
 export class JokeBoxComponent {
 
-  currentJoke: object = {};
+  currentJoke: object;
   jokeState: string = 'no-joke'; // no-joke, show-joke, show-answer
   buttonTexts: string[] = ['give it to me', 'mooooooore!', '\'sa pa', 'one more time.', 'again again!', 'hahahahaha!!', 'petmalu'];
   buttonText: string;
-  freshLoad: boolean = true;
-
+  loading = false;
+  noMore = false;
   
   constructor(
     private jokeService: JokeService,
@@ -21,8 +21,8 @@ export class JokeBoxComponent {
     this.jokeService.currentJoke.subscribe( v => {
       if(v) {
         this.currentJoke = v;
-      } else {
-        this.currentJoke = {empty: true};
+        this.loading = false;
+        // this.jokeState = 'no-joke';
       }
     });
 
@@ -33,7 +33,7 @@ export class JokeBoxComponent {
     return Math.floor(Math.random()*(max-min+1)+min);
   }
 
-  
+  =
   nextState() {
     if(this.jokeState === 'no-joke') {
       this.jokeState = 'show-joke';
@@ -41,10 +41,17 @@ export class JokeBoxComponent {
       this.jokeState = 'show-answer';
     } else {
       this.jokeService.nextJoke();
+      this.loading = true;
       this.jokeState = 'show-joke';
       this.buttonText = this.buttonTexts[this.generateRand()];
-      this.currentJoke = {empty: true};
-      this.freshLoad = false;
+      this.currentJoke = null;
+      
+      setTimeout( () => {
+        if(!this.currentJoke) {
+          this.loading = false;
+          this.noMore = true;
+        }
+      }, 1500);
     } 
   }
 }

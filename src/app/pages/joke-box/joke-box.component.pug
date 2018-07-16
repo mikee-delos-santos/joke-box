@@ -1,5 +1,6 @@
-.error('*ngIf'='currentJoke["empty"] && !freshLoad')
+.error('*ngIf'='!loading && noMore')
   .joke-error wala na finish na. come back later for more jokes!
+.loading('*ngIf'='loading') loading....
 .joke-box('*ngIf'='currentJoke')
   .joke.show('*ngIf'='jokeState !== "no-joke"')
     .joke-title {{currentJoke.joke}}
