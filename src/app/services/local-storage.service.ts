@@ -18,4 +18,8 @@ export class LocalStorageService {
     idx = idx ? idx : "0";
     return parseInt(idx);
   }
+
+  reset(): void {
+    this.localStorage.removeItem('last_joke');
+  }
 }

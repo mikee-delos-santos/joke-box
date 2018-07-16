@@ -12,18 +12,17 @@ export class JokeBoxComponent {
   jokeState: string = 'no-joke'; // no-joke, show-joke, show-answer
   buttonTexts: string[] = ['give it to me', 'mooooooore!', '\'sa pa', 'one more time.', 'again again!', 'hahahahaha!!', 'petmalu'];
   buttonText: string;
-  queryDone: boolean = false;
+  freshLoad: boolean = true;
+
   
   constructor(
     private jokeService: JokeService,
   ) {
     this.jokeService.currentJoke.subscribe( v => {
-      this.queryDone = true;
       if(v) {
         this.currentJoke = v;
       } else {
-        this.currentJoke = undefined;
-        console.log('thats all folks!!');
+        this.currentJoke = {empty: true};
       }
     });
 
@@ -41,13 +40,11 @@ export class JokeBoxComponent {
     } else if(this.jokeState === 'show-joke') {
       this.jokeState = 'show-answer';
     } else {
-      this.queryDone = false;
       this.jokeService.nextJoke();
       this.jokeState = 'show-joke';
       this.buttonText = this.buttonTexts[this.generateRand()];
-      this.currentJoke = {};
+      this.currentJoke = {empty: true};
+      this.freshLoad = false;
     } 
-
-    console.log(this.jokeState);
   }
 }
