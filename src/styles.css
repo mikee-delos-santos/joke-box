@@ -2,5 +2,5 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 body {
-  font-family: 'Gaegu', cursive;
+  font-family: 'Gaegu', cursive, 'Courier';
 }
