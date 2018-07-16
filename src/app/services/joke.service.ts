@@ -22,6 +22,11 @@ export class JokeService {
   }
 
   queryAndDiscard(idx) {
+    if(!navigator.onLine) {
+      console.log('heyy..');
+      this.currentJoke.next(this.getOfflineJoke(this.generateRand(0, 10)));
+    }
+
     this.afs.collection('jokes', ref => ref.orderBy('id', 'asc').startAt(idx).endAt(idx+1).limit(1)).valueChanges().pipe(take(1)).subscribe(
       v => {
         if(v[0]) {
@@ -30,6 +35,18 @@ export class JokeService {
       }
     );
 
+  }
+
+  generateRand(min, max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
+
+  getOfflineJoke(idx) {
+    return {
+      joke: `offline joke ${idx}`,
+      buttonText: `i am an offline joke`,
+      answer: `offline joke answer ${idx}`
+    }
   }
 
   nextJoke() {

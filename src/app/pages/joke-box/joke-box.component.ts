@@ -12,12 +12,14 @@ export class JokeBoxComponent {
   jokeState: string = 'no-joke'; // no-joke, show-joke, show-answer
   buttonTexts: string[] = ['give it to me', 'mooooooore!', '\'sa pa', 'one more time.', 'again again!', 'hahahahaha!!', 'petmalu'];
   buttonText: string;
-  loading = false;
+  loading = true;
   noMore = false;
+
   
   constructor(
     private jokeService: JokeService,
   ) {
+
     this.jokeService.currentJoke.subscribe( v => {
       if(v) {
         this.currentJoke = v;
@@ -29,11 +31,12 @@ export class JokeBoxComponent {
     this.buttonText = this.buttonTexts[0];
   }
 
+ 
+
   generateRand(min = 1, max = this.buttonTexts.length - 1) {
     return Math.floor(Math.random()*(max-min+1)+min);
   }
 
-  =
   nextState() {
     if(this.jokeState === 'no-joke') {
       this.jokeState = 'show-joke';
