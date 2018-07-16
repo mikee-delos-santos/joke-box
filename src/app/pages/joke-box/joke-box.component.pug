@@ -1,5 +1,6 @@
 .error('*ngIf'='!loading && noMore')
-  .joke-error wala na finish na. come back later for more jokes!
+  .joke-error wala na finish na. come back later for more 
+    a('(click)'='reloadAndReset()') jokes!
 .loading('*ngIf'='loading') loading....
 .joke-box('*ngIf'='currentJoke')
   .joke.show('*ngIf'='jokeState !== "no-joke"')

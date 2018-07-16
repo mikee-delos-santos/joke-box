@@ -20,6 +20,13 @@ export class JokeBoxComponent {
     private jokeService: JokeService,
   ) {
 
+    setTimeout( () => {
+      if(!this.currentJoke) {
+        this.loading = false;
+        this.noMore = true;
+      }
+    }, 1500);
+
     this.jokeService.currentJoke.subscribe( v => {
       if(v) {
         this.currentJoke = v;
@@ -29,6 +36,10 @@ export class JokeBoxComponent {
     });
 
     this.buttonText = this.buttonTexts[0];
+  }
+
+  reloadAndReset() {
+    window.location.href = window.location.pathname+ "?reset=true";
   }
 
  
